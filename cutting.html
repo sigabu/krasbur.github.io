@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Алмазная резка | АЛМАЗ-МАСТЕР</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily: {
+          heading: ['Inter', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif']
+        },
+        extend: {
+          colors: {
+            primary: '#0047AB',
+            navy: '#F4F7F6',
+            charcoal: '#334155',
+            ghost: '#FFFFFF',
+            dark: '#334155'
+          },
+          borderColor: {
+            DEFAULT: '#E2E8F0',
+            primary: '#0047AB'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
+      background-color: #F4F7F6;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.body.style.opacity = '1';
+    });
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-navy min-h-screen flex flex-col text-charcoal">
+
+  <!-- HEADER -->
+  <header class="site-header sticky top-0 z-50 bg-ghost shadow-sm border-b border-[#E2E8F0]">
+    <nav class="site-header-nav max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="font-heading text-2xl tracking-tight text-charcoal font-bold">АЛМАЗ-МАСТЕР</a>
+      </div>
+      <ul class="hidden md:flex items-center gap-8 font-medium text-sm font-body">
+        <li><a href="index.html" class="hover:text-primary transition-base text-charcoal font-medium">Главная</a></li>
+        <li class="relative nav-services">
+          <button class="hover:text-primary transition-base text-charcoal font-medium inline-flex items-center gap-1">
+            Услуги
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="nav-services-menu absolute left-0 top-full w-48 bg-ghost border border-[#E2E8F0] shadow-md opacity-0 pointer-events-none transition-base z-50 rounded-lg">
+            <a href="drilling.html" class="block px-4 py-2 text-sm hover:bg-[#F4F7F6] font-medium rounded-t-lg">Алмазное бурение</a>
+            <a href="cutting.html" class="block px-4 py-2 text-sm hover:bg-[#F4F7F6] font-medium">Алмазная резка</a>
+            <a href="demolition.html" class="block px-4 py-2 text-sm hover:bg-[#F4F7F6] font-medium rounded-b-lg">Демонтаж</a>
+          </div>
+        </li>
+        <li><a href="index.html#prices" class="hover:text-primary transition-base text-charcoal font-medium">Прайс</a></li>
+        <li><a href="index.html#calculator" class="hover:text-primary transition-base text-charcoal font-medium">Калькулятор</a></li>
+        <li><a href="#contacts" class="hover:text-primary transition-base text-charcoal font-medium">Контакты</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <a href="tel:[ВАШ ТЕЛЕФОН]" class="hidden md:block font-body px-5 py-2 border border-primary text-primary font-semibold astra-btn-outline transition-base text-sm rounded-lg">[ВАШ ТЕЛЕФОН]</a>
+        <button id="header-callback" class="font-body px-6 py-2 astra-btn shadow-md font-semibold text-sm transition-base rounded-lg">Перезвоните мне</button>
+        <button id="burger" class="block md:hidden p-2 focus:outline-none hover:bg-[#F4F7F6] rounded-lg" aria-label="Открыть меню">
+          <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 bg-ghost/90 backdrop-blur-md flex flex-col items-center gap-6 justify-center text-xl font-heading text-charcoal translate-y-full transition">
+      <button id="close-mobile" class="absolute top-4 right-6 p-2 transition hover:bg-[#F4F7F6] rounded-lg">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="#0047AB" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <a href="index.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Главная</a>
+      <a href="drilling.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Алмазное бурение</a>
+      <a href="cutting.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Алмазная резка</a>
+      <a href="demolition.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Демонтаж</a>
+      <a href="index.html#prices" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Прайс</a>
+      <a href="index.html#calculator" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Калькулятор</a>
+      <a href="#contacts" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Контакты</a>
+      <a href="tel:[ВАШ ТЕЛЕФОН]" class="font-heading text-base text-primary font-semibold underline decoration-primary">[ВАШ ТЕЛЕФОН]</a>
+    </div>
+  </header>
+
+  <main class="flex-1">
+    <!-- HERO specific for cutting -->
+    <section class="relative min-h-[350px] sm:min-h-[380px] md:min-h-[450px] flex items-center bg-navy overflow-hidden py-8 sm:py-12">
+      <div class="absolute inset-0 bg-[url('images/hero-bg.png')] bg-cover bg-center opacity-20" style="background-position: center bottom; background-size: cover;"></div>
+      <div class="astra-hero-overlay"></div>
+      <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+        <div class="flex-1 w-full sm:w-auto">
+          <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3 sm:mb-4 font-bold text-charcoal">Алмазная резка</h1>
+          <p class="text-base sm:text-lg md:text-xl mb-5 sm:mb-6 text-charcoal/80 font-body">
+            Резка проёмов, стен и перекрытий с идеально ровной геометрией, минимальной вибрацией и без критической нагрузки на конструкции.
+          </p>
+          <div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4">
+            <a href="index.html#calculator" class="font-heading px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg astra-btn shadow-md font-semibold rounded-lg w-full sm:w-auto">Заказать расчёт</a>
+            <span class="text-xs sm:text-sm text-charcoal/70">или позвоните: <a href="tel:[ВАШ ТЕЛЕФОН]" class="underline decoration-primary text-primary font-semibold">[ВАШ ТЕЛЕФОН]</a></span>
+          </div>
+        </div>
+        <!-- mini calculator / quick request -->
+        <div class="flex-1 w-full max-w-md mx-auto md:mx-0">
+          <div class="bg-ghost border border-[#E2E8F0] p-4 sm:p-6 shadow-md rounded-xl">
+            <h2 class="font-heading text-xl text-primary mb-4 text-center font-bold">Быстрый запрос</h2>
+            <p class="text-sm text-charcoal mb-4 text-center">
+              Укажите длину и толщину реза — мы подскажем ориентировочную стоимость и сроки.
+            </p>
+            <form class="space-y-3">
+              <div>
+                <label class="block text-xs font-heading mb-1 text-charcoal font-semibold">Длина реза, мм</label>
+                <input type="number" class="w-full astra-input p-2" placeholder="например, 1200">
+              </div>
+              <div>
+                <label class="block text-xs font-heading mb-1 text-charcoal font-semibold">Толщина, мм</label>
+                <input type="number" class="w-full astra-input p-2" placeholder="например, 250">
+              </div>
+              <div>
+                <label class="block text-xs font-heading mb-1 text-charcoal font-semibold">Телефон</label>
+                <input type="tel" class="w-full astra-input p-2" placeholder="+7 (___) ___-__-__">
+              </div>
+              <button type="button" class="w-full astra-btn quick-request-btn mt-2 font-heading font-semibold rounded-lg">Заказать сейчас</button>
+              <p class="text-[11px] text-charcoal/50 text-center mt-1">Мини-калькулятор демонстрационный, без отправки.</p>
+              <p class="text-[11px] text-charcoal/50 text-center">Для детального расчёта используйте калькулятор на главной.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed content -->
+    <section class="bg-ghost py-12 border-t border-[#E2E8F0]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-8 items-start">
+        <div class="space-y-4">
+          <h2 class="font-heading text-3xl  text-charcoal font-bold">Особенности алмазной резки</h2>
+          <p class="text-base text-charcoal/80 font-bold">
+            Здесь разместите описание технологий резки: стенорезные машины, швонарезчики, канатная резка и другие решения, которые вы применяете.
+          </p>
+          <p class="text-base text-charcoal/80 font-bold">
+            Расскажите про преимущества по сравнению с ударными методами, возможности работы в жилых домах и коммерческих объектах, сложные случаи и ограничения.
+          </p>
+          <ul class="list-disc pl-5 text-base text-charcoal/80 space-y-1 font-bold">
+            <li>Резка проёмов под двери и окна</li>
+            <li>Удаление участков стен и перекрытий</li>
+            <li>Работа с монолитом и кирпичом</li>
+          </ul>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="img-aspect-4-3 h-36 sm:h-44 bg-[url('https://placehold.co/600x400')] bg-cover bg-center shadow border border-[#E2E8F0]"></div>
+          <div class="img-aspect-4-3 h-36 sm:h-44 bg-[url('https://placehold.co/600x400')] bg-cover bg-center shadow border border-[#E2E8F0]"></div>
+          <div class="img-aspect-4-3 h-36 sm:h-44 bg-[url('https://placehold.co/600x400')] bg-cover bg-center shadow border border-[#E2E8F0]"></div>
+          <div class="img-aspect-4-3 h-36 sm:h-44 bg-[url('https://placehold.co/600x400')] bg-cover bg-center shadow border border-[#E2E8F0]"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Link back to main calculator -->
+    <section class=" py-10 border-t border-[#E2E8F0]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="font-heading text-2xl  text-charcoal mb-2 font-bold">Рассчитать стоимость онлайн</h3>
+          <p class="text-base text-charcoal/80 font-bold">
+            Основной калькулятор на главной странице поможет быстро получить ориентировочную цену работ по резке с учётом параметров вашего объекта.
+          </p>
+        </div>
+        <a href="index.html#calculator" class="astra-btn px-8 py-3 font-heading text-sm  tracking-widest text-center font-bold">Открыть калькулятор</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy   pt-16 pb-8 border-t border-[#E2E8F0]" id="contacts">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row gap-8 md:gap-14">
+        <div class="flex-1 flex flex-col gap-6">
+          <h3 class="font-heading text-3xl  tracking-widest mb-2 text-primary font-bold">Контакты</h3>
+          <ul class="text-base font-body space-y-1">
+            <li><span class="text-charcoal font-bold">Адрес:</span> <span class="opacity-80 text-charcoal">[ВАШ АДРЕС]</span></li>
+            <li><span class="text-charcoal font-bold">Телефон:</span> <a href="tel:[ВАШ ТЕЛЕФОН]" class="underline decoration-primary text-primary font-bold">[ВАШ ТЕЛЕФОН]</a></li>
+            <li><span class="text-charcoal font-bold">WhatsApp:</span> <a href="https://wa.me/[ВАШ ТЕЛЕФОН]" target="_blank" class="underline decoration-primary text-primary font-bold">WhatsApp</a></li>
+            <li><span class="text-charcoal font-bold">Telegram:</span> <a href="https://t.me/[ВАШ ТЕЛЕГРАММ]" target="_blank" class="underline decoration-primary text-primary font-bold">Telegram</a></li>
+          </ul>
+          <p class="text-sm text-charcoal/70 font-bold">Работаем ежедневно с 08:00 до 22:00</p>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+          <div class="w-full h-56 bg-ghost border border-[#E2E8F0] flex items-center justify-center">
+            <span class="font-heading text-xl  text-charcoal/30 font-bold">[Google Map места]</span>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-8 border-t border-[#E2E8F0] pt-4 flex flex-col md:flex-row items-center justify-between gap-1 text-xs text-charcoal/70 font-body">
+        <span class="font-bold">© <span id="footer-year"></span> АЛМАЗ-МАСТЕР. Все права защищены.</span>
+        <span>Разработка — <span class="text-primary font-bold">[Имя/Компания]</span></span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

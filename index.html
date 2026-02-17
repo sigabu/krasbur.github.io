@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <!-- Tailwind CDN first for faster processing -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Алмазное бурение и резка | АЛМАЗ-МАСТЕР</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily: {
+          heading: ['Inter', 'system-ui', 'sans-serif'],
+          body: ['Inter', 'system-ui', 'sans-serif']
+        },
+        extend: {
+          colors: {
+            primary: '#0047AB',      // Deep Cobalt Blue - Accent/Action
+            navy: '#F4F7F6',         // Light Mist Grey - Global Background
+            charcoal: '#334155',     // Slate Charcoal - Text Color
+            ghost: '#FFFFFF',        // Pure White - Surface/Cards
+            dark: '#334155'          // Slate Charcoal
+          },
+          borderColor: {
+            DEFAULT: '#E2E8F0',
+            primary: '#0047AB'
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Critical CSS to prevent FOUC -->
+  <style>
+    body {
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
+      background-color: #F4F7F6;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.body.style.opacity = '1';
+    });
+  </script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-navy min-h-screen flex flex-col text-charcoal">
+
+  <!-- HEADER -->
+  <header class="site-header sticky top-0 z-50 bg-ghost shadow-sm border-b border-[#E2E8F0]">
+    <nav class="site-header-nav max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="font-heading text-2xl tracking-tight text-charcoal font-bold">АЛМАЗ-МАСТЕР</a>
+      </div>
+      <ul class="hidden md:flex items-center gap-8 font-medium text-sm font-body">
+        <li><a href="index.html" class="hover:text-primary transition-base text-charcoal font-medium">Главная</a></li>
+        <li class="relative nav-services">
+          <button class="hover:text-primary transition-base text-charcoal font-medium inline-flex items-center gap-1">
+            Услуги
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="nav-services-menu absolute left-0 top-full w-48 bg-ghost border border-[#E2E8F0] rounded-lg shadow-md opacity-0 pointer-events-none transition-base z-50">
+            <a href="drilling.html" class="block px-4 py-2 text-sm hover:bg-[#F4F7F6] font-medium rounded-t-lg">Алмазное бурение</a>
+            <a href="cutting.html" class="block px-4 py-2 text-sm hover:bg-[#F4F7F6] font-medium">Алмазная резка</a>
+            <a href="demolition.html" class="block px-4 py-2 text-sm hover:bg-[#F4F7F6] font-medium rounded-b-lg">Демонтаж</a>
+          </div>
+        </li>
+        <li><a href="#prices" class="hover:text-primary transition-base text-charcoal font-medium">Прайс</a></li>
+        <li><a href="#calculator" class="hover:text-primary transition-base text-charcoal font-medium">Калькулятор</a></li>
+        <li><a href="#contacts" class="hover:text-primary transition-base text-charcoal font-medium">Контакты</a></li>
+      </ul>
+      <div class="flex items-center gap-3">
+        <a href="tel:[ВАШ ТЕЛЕФОН]" class="hidden md:block font-body px-5 py-2 border border-primary text-primary font-semibold astra-btn-outline transition-base text-sm rounded-lg">[ВАШ ТЕЛЕФОН]</a>
+        <button id="header-callback" class="font-body px-6 py-2 astra-btn shadow-md font-semibold text-sm transition-base rounded-lg">Перезвоните мне</button>
+        <button id="burger" class="block md:hidden p-2 focus:outline-none hover:bg-[#F4F7F6] rounded-lg" aria-label="Открыть меню">
+          <svg class="w-6 h-6 text-charcoal" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 bg-ghost/90 backdrop-blur-md flex flex-col items-center gap-6 justify-center text-xl font-heading text-charcoal translate-y-full transition">
+      <button id="close-mobile" class="absolute top-4 right-6 p-2 transition hover:bg-[#F4F7F6] rounded-lg">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="#0047AB" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <a href="index.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Главная</a>
+      <a href="drilling.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Алмазное бурение</a>
+      <a href="cutting.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Алмазная резка</a>
+      <a href="demolition.html" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Демонтаж</a>
+      <a href="#prices" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Прайс</a>
+      <a href="#calculator" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Калькулятор</a>
+      <a href="#contacts" class="hover:text-primary transition-base font-semibold" onclick="closeMobile()">Контакты</a>
+      <a href="tel:[ВАШ ТЕЛЕФОН]" class="font-heading text-base text-primary font-semibold underline decoration-primary">[ВАШ ТЕЛЕФОН]</a>
+    </div>
+  </header>
+
+  <main class="flex-1">
+
+    <!-- HERO -->
+    <section class="relative min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center bg-navy overflow-hidden pb-6 pt-12 sm:pt-20">
+      <div class="absolute inset-0 bg-[url('images/hero-bg.png')] bg-cover bg-center sm:bg-center md:bg-center opacity-65" style="background-position: center bottom; background-size: cover;"></div>
+      <div class="astra-hero-overlay"></div>
+      <div class="relative z-10 w-full max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-10 px-4 sm:px-6">
+        <div class="flex-1 w-full sm:w-auto">
+          <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight mb-3 sm:mb-4 text-charcoal font-bold">
+            Алмазное бурение и резка<br class="hidden sm:block">любой сложности в <span class="text-primary">[ГОРОД]</span>
+          </h1>
+          <p class="text-base sm:text-lg md:text-xl mb-5 sm:mb-7 text-charcoal/80 font-body">
+            Работаем без пыли и шума. Выезд в день обращения.<br class="hidden sm:block">Официально. Гарантия на все работы.
+          </p>
+          <div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4">
+            <button id="hero-calc-btn" class="font-heading px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg astra-btn shadow-md font-semibold rounded-lg w-full sm:w-auto">Рассчитать стоимость</button>
+            <span class="text-xs sm:text-sm text-charcoal/70">или позвоните: <a href="tel:[ВАШ ТЕЛЕФОН]" class="underline decoration-primary text-primary font-semibold">[ВАШ ТЕЛЕФОН]</a></span>
+          </div>
+        </div>
+        <!-- CALCULATOR CONTAINER -->
+        <div id="calculator" class="flex-1 w-full max-w-lg mt-10 sm:mt-0 mx-auto sm:mx-0" tabindex="0" style="z-index:301;">
+          <div class="bg-ghost border border-[#E2E8F0] p-4 sm:p-7 shadow-md sm:min-h-[600px] relative flex flex-col rounded-xl" id="calculator-container">
+            <h2 class="font-heading text-2xl text-primary mb-4 border-b border-[#E2E8F0] pb-3 text-center font-bold">Калькулятор стоимости</h2>
+            <!-- Progress bar -->
+            <div class="flex items-center gap-3 mb-8">
+              <div class="flex-1 h-2 astra-progress-bg rounded-full">
+                <div id="calc-progress-bar" class="h-2 astra-progress-bar transition-all" style="width:33%"></div>
+              </div>
+              <span id="calc-step-label" class="text-sm font-bold font-heading text-primary">Шаг 1 из 3</span>
+            </div>
+            <form id="calc-form" autocomplete="off" class="flex flex-col flex-1 relative pb-0 sm:pb-24 overflow-visible">
+              <!-- Step 1: Service Type -->
+              <div class="calc-step step-1 flex flex-col gap-6 transition-opacity" style="opacity:1;">
+                <label class="font-heading text-base sm:text-lg font-bold text-charcoal mb-2">Выберите услугу</label>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                  <label class="block border border-[#E2E8F0] astra-card p-4 text-center cursor-pointer group hover:bg-[#F4F7F6] transition peer-checked:border-2 peer-checked:border-primary calc-service-option rounded-lg" data-value="Бурение" style="outline: none;">
+                    <input type="radio" name="service" value="Бурение" class="peer sr-only" required>
+                    <span class="flex flex-col items-center gap-2">
+                      <svg class="w-10 h-10 mx-auto group-hover:text-primary group-[:has(input:checked)]:text-primary text-primary transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                      <span class="font-heading text-base text-charcoal group-hover:text-primary group-[:has(input:checked)]:text-primary transition font-semibold">Бурение</span>
+                    </span>
+                  </label>
+                  <label class="block border border-[#E2E8F0] astra-card p-4 text-center cursor-pointer group hover:bg-[#F4F7F6] transition peer-checked:border-2 peer-checked:border-primary calc-service-option rounded-lg" data-value="Резка" style="outline: none;">
+                    <input type="radio" name="service" value="Резка" class="peer sr-only">
+                    <span class="flex flex-col items-center gap-2">
+                      <svg class="w-10 h-10 mx-auto group-hover:text-primary group-[:has(input:checked)]:text-primary text-primary transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M12 7v10M7 12h10"/></svg>
+                      <span class="font-heading text-base text-charcoal group-hover:text-primary group-[:has(input:checked)]:text-primary transition font-semibold">Резка</span>
+                    </span>
+                  </label>
+                  <label class="block border border-[#E2E8F0] astra-card p-4 text-center cursor-pointer group hover:bg-[#F4F7F6] transition peer-checked:border-2 peer-checked:border-primary calc-service-option rounded-lg" data-value="Демонтаж" style="outline: none;">
+                    <input type="radio" name="service" value="Демонтаж" class="peer sr-only">
+                    <span class="flex flex-col items-center gap-2">
+                      <svg class="w-10 h-10 mx-auto group-hover:text-primary group-[:has(input:checked)]:text-primary text-primary transition" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="13" width="14" height="6" rx="2"/><path d="M8 13V7a4 4 0 1 1 8 0v6"/></svg>
+                      <span class="font-heading text-base text-charcoal group-hover:text-primary group-[:has(input:checked)]:text-primary transition font-semibold">Демонтаж</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+              <!-- Step 2: Parameters, will change according to category -->
+              <div class="calc-step step-2 absolute inset-0 flex flex-col gap-4 sm:gap-6 bg-ghost transition-opacity pointer-events-none opacity-0" style="z-index:2;">
+                <label id="step2-heading" class="font-heading text-base sm:text-lg font-bold text-charcoal mb-2">Параметры</label>
+                <!-- Options for "Бурение" (Drilling) -->
+                <div id="params-burenie" class="params-options grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Диаметр, мм</label>
+                    <select name="diameter_burenie" id="diameter_burenie" class="w-full astra-input p-2 calc-param-input" required>
+                      <option value="" disabled selected>Выберите...</option>
+                      <option>52</option><option>82</option><option>112</option><option>132</option>
+                      <option>162</option><option>202</option><option>252</option>
+                      <option value="более 300">Более 300</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Глубина, мм</label>
+                    <input type="number" name="depth_burenie" id="depth_burenie" min="1" placeholder="например, 350" required class="w-full astra-input p-2 calc-param-input">
+                  </div>
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Материал</label>
+                    <select name="material_burenie" id="material_burenie" class="w-full astra-input p-2 calc-param-input" required>
+                      <option value="" disabled selected>Выберите...</option>
+                      <option>Бетон</option>
+                      <option>Железобетон</option>
+                      <option>Кирпич</option>
+                      <option>Камень/Блок</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Options for "Резка" (Cutting) -->
+                <div id="params-rezka" class="params-options grid grid-cols-1 sm:grid-cols-3 gap-4" style="display:none;">
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Длина реза, мм</label>
+                    <input type="number" name="rezka-length" id="rezka-length" min="1" placeholder="например, 500" required class="w-full astra-input p-2 calc-param-input">
+                  </div>
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Толщина, мм</label>
+                    <input type="number" name="rezka-thickness" id="rezka-thickness" min="1" placeholder="например, 250" required class="w-full astra-input p-2 calc-param-input">
+                  </div>
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Материал</label>
+                    <select name="rezka-material" id="rezka-material" class="w-full astra-input p-2 calc-param-input" required>
+                      <option value="" disabled selected>Выберите...</option>
+                      <option>Бетон</option>
+                      <option>Железобетон</option>
+                      <option>Кирпич</option>
+                      <option>Камень/Блок</option>
+                    </select>
+                  </div>
+                </div>
+                <!-- Options for "Демонтаж" (Dismantle) -->
+                <div id="params-demontazh" class="params-options grid grid-cols-1 sm:grid-cols-3 gap-4" style="display:none;">
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Вид конструкции</label>
+                    <select name="demo-type" id="demo-type" class="w-full astra-input p-2 calc-param-input" required>
+                      <option value="" disabled selected>Выберите...</option>
+                      <option>Стена</option>
+                      <option>Перекрытие</option>
+                      <option>Фундамент</option>
+                      <option>Лестница</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block font-heading text-xs font-semibold mb-1 text-charcoal">Площадь, м²</label>
+                    <input type="number" name="demo-area" id="demo-area" min="1" placeholder="например, 8" required class="w-full astra-input p-2 calc-param-input">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Final offer + Contact -->
+              <div class="calc-step step-3 absolute inset-0 flex flex-col gap-4 sm:gap-6 bg-ghost transition-opacity pointer-events-none opacity-0" style="z-index:3;">
+                <div>
+                  <span class="font-heading text-base sm:text-lg font-bold text-primary">Расчёт готов!</span>
+                  <p class="text-sm sm:text-base mt-2 text-charcoal">Оставьте ваши контакты — менеджер свяжется с вами в течение 10 минут и озвучит точную стоимость.</p>
+                  <div id="selected-summary" class="text-xs mt-2 text-charcoal/70"></div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div>
+                    <label for="client-name" class="block font-heading text-xs font-semibold mb-1 text-charcoal">Имя</label>
+                    <input id="client-name" name="client-name" type="text" class="w-full astra-input p-2" placeholder="Ваше имя" required>
+                  </div>
+                  <div>
+                    <label for="client-phone" class="block font-heading text-xs font-semibold mb-1 text-charcoal">Телефон</label>
+                    <input id="client-phone" name="client-phone" type="tel" class="w-full astra-input p-2" placeholder="+7 (___) ___-__-__" required>
+                  </div>
+                </div>
+                <label class="inline-flex items-center gap-2 mt-2 mb-2 text-xs font-body text-charcoal">
+                  <input type="checkbox" required style="accent-color:#0047AB">
+                  Согласен на обработку персональных данных.
+                </label>
+                <div class="text-xs text-charcoal/70">Без спама! Только расчёт и уточнение заявки.</div>
+              </div>
+              <!-- Navigation -->
+              <div class="absolute sm:absolute left-0 right-0 bottom-0 flex items-center justify-between pt-4 sm:pt-5 border-t border-[#E2E8F0] bg-transparent z-10 px-4 sm:px-0" style="min-height:70px;">
+                <button id="calc-back-btn" type="button" class="inline-flex items-center astra-btn-outline px-4 sm:px-8 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm transition-base rounded-lg" disabled>Назад</button>
+                <button id="calc-next-btn" type="button" class="inline-flex items-center astra-btn px-4 sm:px-8 py-2.5 sm:py-3 font-semibold text-xs sm:text-sm transition-base rounded-lg">Далее</button>
+              </div>
+              <!-- Success message -->
+              <div id="calc-success" class="absolute inset-0 flex flex-col items-center justify-center bg-ghost/95 z-20 p-4 shadow-lg hidden">
+                <svg class="w-20 h-20 text-primary mb-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path stroke="currentColor" stroke-width="2" d="M8 13l3 3 5-5"/></svg>
+                <p class="font-heading text-2xl text-primary mb-2">Спасибо!</p>
+                <p class="text-navy text-center text-lg">Ваша заявка принята.<br>Мы перезвоним вам в течение 10 минут.</p>
+              </div>
+            </form>
+          </div>
+          <script>
+            // Калькулятор логика по категориям этапам. Vanilla JS
+            (function() {
+              // State
+              let step = 1;
+              let service = '';
+              // Elements
+              const form = document.getElementById('calc-form');
+              const calcSteps = form.querySelectorAll('.calc-step');
+              const backBtn = document.getElementById('calc-back-btn');
+              const nextBtn = document.getElementById('calc-next-btn');
+              const progressBar = document.getElementById('calc-progress-bar');
+              const stepLabel = document.getElementById('calc-step-label');
+              const paramsBurenie = document.getElementById('params-burenie');
+              const paramsRezka = document.getElementById('params-rezka');
+              const paramsDemontazh = document.getElementById('params-demontazh');
+              const options = form.querySelectorAll('.calc-service-option input[type="radio"]');
+              const summaryDiv = document.getElementById('selected-summary');
+              const navBar = form.querySelector('.absolute.left-0.right-0.bottom-0');
+              const successMsg = document.getElementById('calc-success');
+
+              // Новый хак: всегда display:block, управление только классами и opacity + pointerEvents
+              // В какой-то tailwind или кастом css display:none (или display:'') может вызывать баги
+              // Потому убираем все .style.display = ... для calcSteps
+
+              // Helpers
+              function showStep(n) {
+                const isMobile = window.innerWidth <= 640;
+                calcSteps.forEach((el, i) => {
+                  if(i === n-1) {
+                    el.classList.remove('invisible');
+                    if (isMobile) {
+                      el.style.display = 'flex';
+                    } else {
+                      el.style.opacity = 1;
+                      el.style.pointerEvents = 'auto';
+                    }
+                  } else {
+                    el.classList.add('invisible');
+                    if (isMobile) {
+                      el.style.display = 'none';
+                    } else {
+                      el.style.opacity = 0;
+                      el.style.pointerEvents = 'none';
+                    }
+                  }
+                });
+
+                // Показываем панель навигации, если успех не показан
+                if (navBar) navBar.style.display = (successMsg && successMsg.style.display === "flex") ? "none" : "";
+                // Показываем все шаги (но видим только нужный)
+                if (successMsg) successMsg.style.display = (successMsg.style.display === "flex") ? "flex" : "none";
+
+                // Высота контейнера (только для десктопа)
+                setTimeout(function() {
+                  if (window.innerWidth > 640) {
+                    const container = document.getElementById('calculator-container');
+                    const current = form.querySelector('.calc-step:not(.invisible)');
+                    if (container && current) {
+                      container.style.minHeight = Math.max(600, current.offsetHeight+150) + 'px';
+                    }
+                  } else {
+                    // На мобильных убираем фиксированную высоту
+                    const container = document.getElementById('calculator-container');
+                    if (container) {
+                      container.style.minHeight = 'auto';
+                    }
+                  }
+                }, 30);
+
+                // Progress line & label
+                progressBar.style.width = (n === 1 ? '33%' : n === 2 ? '66%' : '100%');
+                stepLabel.textContent = `Шаг ${n} из 3`;
+                backBtn.disabled = (n === 1);
+                nextBtn.textContent = (n === 3 ? 'Отправить' : 'Далее');
+
+                // На step 3 показываем summary
+                if(n === 3 && summaryDiv) {
+                  let html = '';
+                  if(service==='Бурение') {
+                    html = `<span class="font-bold">Категория:</span> ${service}<br>
+                            <span>Диаметр:</span> ${form.diameter_burenie.value || '-'} мм<br>
+                            <span>Глубина:</span> ${form.depth_burenie.value || '-'} мм<br>
+                            <span>Материал:</span> ${form.material_burenie.value || '-'}`;
+                  } else if(service==='Резка') {
+                    html = `<span class="font-bold">Категория:</span> ${service}<br>
+                            <span>Длина реза:</span> ${form['rezka-length'].value || '-'} мм<br>
+                            <span>Толщина:</span> ${form['rezka-thickness'].value || '-'} мм<br>
+                            <span>Материал:</span> ${form['rezka-material'].value || '-'}`;
+                  } else if(service==='Демонтаж') {
+                    html = `<span class="font-bold">Категория:</span> ${service}<br>
+                            <span>Конструкция:</span> ${form['demo-type'].value || '-'}<br>
+                            <span>Площадь:</span> ${form['demo-area'].value || '-'} м²`;
+                  }
+                  summaryDiv.innerHTML = html;
+                }
+              }
+              // Используем категорию для параметров
+              function updateParamsOptions(selected) {
+                paramsBurenie.style.display = selected==='Бурение'?'grid':'none';
+                paramsRezka.style.display = selected==='Резка'?'grid':'none';
+                paramsDemontazh.style.display = selected==='Демонтаж'?'grid':'none';
+                // Фокус первый input выбранной категории
+                let firstInput;
+                if(selected==='Бурение') {
+                  firstInput = paramsBurenie.querySelector('select, input');
+                } else if(selected==='Резка') {
+                  firstInput = paramsRezka.querySelector('select, input');
+                } else if(selected==='Демонтаж') {
+                  firstInput = paramsDemontazh.querySelector('select, input');
+                }
+                if(firstInput) firstInput.focus();
+              }
+              // Подсвечиваем выбранную категорию
+              function highlightService() {
+                options.forEach(opt => {
+                  if(opt.checked) {
+                    opt.parentElement.classList.add('ring-2','ring-primary','bg-primary/5');
+                  } else {
+                    opt.parentElement.classList.remove('ring-2','ring-primary','bg-primary/5');
+                  }
+                });
+              }
+
+              // Выбор услуги (Step 1)
+              options.forEach(opt => {
+                opt.addEventListener('change', function() {
+                  service = this.value;
+                  highlightService();
+                  // При выборе -- сразу двигать на Step 2
+                  if(step === 1) {
+                    step = 2;
+                    updateParamsOptions(service);
+                    showStep(step);
+                  }
+                });
+              });
+
+              // "Назад" — фикс бага возврата: теперь только классы и opacity!
+              backBtn.addEventListener('click', function() {
+                if(step > 1 && step <= 3) {
+                  step--;
+                  // починка состояния шагов
+                  calcSteps.forEach((el, i) => {
+                    el.classList.remove('invisible');
+                    el.style.opacity = (i === step-1) ? 1 : 0;
+                    el.style.pointerEvents = (i === step-1) ? 'auto' : 'none';
+                  });
+                  // нав-бар тоже показываем
+                  if (navBar) navBar.style.display = '';
+                  // прячем success если возвращаемся к шагам
+                  if (successMsg) successMsg.style.display = 'none';
+                  showStep(step);
+                }
+              });
+
+              // "Далее"/"Отправить"
+              nextBtn.addEventListener('click', function(e) {
+                if(step === 1) {
+                  return;
+                }
+                if(step === 2) {
+                  // Валидация текущих полей
+                  let valid = false;
+                  if(service === 'Бурение') {
+                    valid = form.diameter_burenie.value && form.depth_burenie.value && form.material_burenie.value;
+                  } else if(service === 'Резка') {
+                    valid = form['rezka-length'].value && form['rezka-thickness'].value && form['rezka-material'].value;
+                  } else if(service === 'Демонтаж') {
+                    valid = form['demo-type'].value && form['demo-area'].value;
+                  }
+                  if(!valid) {
+                    alert('Пожалуйста, заполните все параметры!');
+                    return;
+                  }
+                  step = 3;
+                  showStep(step);
+                } else if(step === 3) {
+                  // Validate name & phone
+                  if(!form['client-name'].value || !form['client-phone'].value || !form.querySelector('input[type="checkbox"]:checked')) {
+                    alert('Пожалуйста, заполните имя, телефон и согласитесь на обработку данных.');
+                    return;
+                  }
+                  // Показываем успех, скрываем всё остальное явно
+                  if (successMsg) successMsg.style.display = 'flex';
+                  // скрываем все шаги через классы и opacity
+                  calcSteps.forEach(el => {
+                    el.classList.add('invisible');
+                    el.style.opacity = 0;
+                    el.style.pointerEvents = 'none';
+                  });
+                  if (navBar) navBar.style.display = 'none';
+                }
+              });
+
+              // Фокус/индикация при первой загрузке
+              showStep(step);
+
+              // Сброс формы: всё в изначальное, починка отображения
+              form.addEventListener('reset', function() {
+                step = 1;
+                service = '';
+                calcSteps.forEach((el, i) => {
+                  el.classList.remove('invisible');
+                  el.style.opacity = (i === 0 ? 1 : 0);
+                  el.style.pointerEvents = (i === 0 ? 'auto' : 'none');
+                });
+                if (navBar) navBar.style.display = '';
+                if (successMsg) successMsg.style.display = 'none';
+                showStep(step);
+                paramsBurenie.style.display = 'grid';
+                paramsRezka.style.display = 'none';
+                paramsDemontazh.style.display = 'none';
+                highlightService();
+              });
+              
+              // Инициализация для мобильных устройств
+              function initMobileCalc() {
+                if (window.innerWidth <= 640) {
+                  const container = document.getElementById('calculator-container');
+                  if (container) {
+                    container.style.minHeight = 'auto';
+                  }
+                  showStep(step); // Перерисовываем текущий шаг с правильными стилями
+                }
+              }
+              
+              // Вызываем при загрузке
+              initMobileCalc();
+              
+              // Обработчик изменения размера окна
+              window.addEventListener('resize', function() {
+                initMobileCalc();
+              });
+            })();
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="bg-navy" id="benefits">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div class="grid sm:grid-cols-4 gap-6">
+          <div class="flex flex-col items-center text-center gap-2">
+            <span class="astra-icon-bg p-4 mb-2">
+              <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 16h-1v-4h-1m4-2h-1a1 1 0 00-1 1v1a1 1 0 001 1h1a1 1 0 001-1v-1a1 1 0 00-1-1z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="10" stroke-width="2"/></svg>
+            </span>
+            <span class="font-heading uppercase text-charcoal font-bold text-lg">Быстро</span>
+            <span class="text-xs text-charcoal/70">Выезд в день обращения</span>
+          </div>
+          <div class="flex flex-col items-center text-center gap-2">
+            <span class="astra-icon-bg p-4 mb-2">
+              <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="font-heading uppercase text-charcoal font-bold text-lg">Чисто</span>
+            <span class="text-xs text-charcoal/70">Без пыли и шума</span>
+          </div>
+          <div class="flex flex-col items-center text-center gap-2">
+            <span class="astra-icon-bg p-4 mb-2">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v16M4 12h16"/></svg>
+            </span>
+            <span class="font-heading uppercase text-charcoal font-bold text-lg">Любая толщина</span>
+            <span class="text-xs text-charcoal/70">Режем и бурим до 2 м+</span>
+          </div>
+          <div class="flex flex-col items-center text-center gap-2">
+            <span class="astra-icon-bg p-4 mb-2">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+            </span>
+            <span class="font-heading uppercase text-charcoal font-bold text-lg">Договор & гарантии</span>
+            <span class="text-xs text-charcoal/70">Официально, с гарантией</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="bg-navy border-t border-[#E2E8F0] py-14 sm:py-20" id="services">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold  section-header mb-10 text-center">Наши услуги</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Drilling Card -->
+          <div class="astra-card p-6 flex flex-col gap-4 items-center shadow group transition hover:scale-105">
+            <div class="astra-icon-bg p-5 mb-2">
+              <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+            </div>
+            <span class="font-heading text-xl uppercase text-charcoal font-bold">Алмазное бурение</span>
+            <span class="text-sm text-charcoal/70 text-center">Отверстия под коммуникации, вентиляцию, анкера.</span>
+            <a href="drilling.html" class="mt-2 text-sm font-bold uppercase tracking-wide text-primary underline decoration-primary">Подробнее</a>
+          </div>
+          <!-- Cutting Card -->
+          <div class="astra-card p-6 flex flex-col gap-4 items-center shadow group transition hover:scale-105">
+            <div class="astra-icon-bg p-5 mb-2">
+              <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M12 7v10M7 12h10"/></svg>
+            </div>
+            <span class="font-heading text-xl uppercase text-charcoal font-bold">Алмазная резка</span>
+            <span class="text-sm text-charcoal/70 text-center">Резка проёмов, стен, перекрытий, окон, дверей.</span>
+            <a href="cutting.html" class="mt-2 text-sm font-bold uppercase tracking-wide text-primary underline decoration-primary">Подробнее</a>
+          </div>
+          <!-- Demolition Card -->
+          <div class="astra-card p-6 flex flex-col gap-4 items-center shadow group transition hover:scale-105">
+            <div class="astra-icon-bg p-5 mb-2">
+              <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="13" width="14" height="6" rx="2"/><path d="M8 13V7a4 4 0 1 1 8 0v6"/></svg>
+            </div>
+            <span class="font-heading text-xl uppercase text-charcoal font-bold">Демонтаж</span>
+            <span class="text-sm text-charcoal/70 text-center">Аккуратное разрушение и вынос мусора.</span>
+            <a href="demolition.html" class="mt-2 text-sm font-bold uppercase tracking-wide text-primary underline decoration-primary">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICE TABLE -->
+    <section class="bg-ghost py-14 sm:py-20 border-t border-[#E2E8F0]" id="prices">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold  section-header mb-8 text-center">Цены на бурение</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border border-[#E2E8F0] overflow-hidden bg-ghost shadow-md rounded-xl">
+            <thead class="bg-primary text-ghost text-xs font-heading font-bold">
+              <tr>
+                <th class="p-3 text-left">Диаметр, мм</th>
+                <th class="p-3 text-left">Глубина, мм</th>
+                <th class="p-3 text-left">Цена, ₽</th>
+              </tr>
+            </thead>
+            <tbody class="text-charcoal font-body">
+              <tr class="border-t border-[#E2E8F0]">
+                <td class="p-3 font-semibold">52</td>
+                <td class="p-3">100–300</td>
+                <td class="p-3 font-semibold">от 500</td>
+              </tr>
+              <tr class="border-t border-[#E2E8F0]">
+                <td class="p-3 font-semibold">82</td>
+                <td class="p-3">100–300</td>
+                <td class="p-3 font-semibold">от 750</td>
+              </tr>
+              <tr class="border-t border-[#E2E8F0]">
+                <td class="p-3 font-semibold">132</td>
+                <td class="p-3">100–300</td>
+                <td class="p-3 font-semibold">от 1300</td>
+              </tr>
+              <tr class="border-t border-[#E2E8F0]">
+                <td class="p-3 font-semibold">162</td>
+                <td class="p-3">100–300</td>
+                <td class="p-3 font-semibold">от 1700</td>
+              </tr>
+              <tr class="border-t border-[#E2E8F0]">
+                <td class="p-3 font-semibold">Более 300</td>
+                <td class="p-3">Индивидуально</td>
+                <td class="p-3 font-semibold">от 2900</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-sm text-charcoal/70 mt-3 text-center">* Стоимость указана ориентировочно. Для точного расчёта используйте калькулятор или звоните: <a href="tel:[ВАШ ТЕЛЕФОН]" class="underline decoration-primary text-primary font-semibold">[ВАШ ТЕЛЕФОН]</a></p>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="bg-navy py-14 sm:py-20 border-t border-[#E2E8F0]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold  section-header mb-8 text-center">Наши объекты</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <img src="https://placehold.co/600x400" alt="Project placeholder" class="img-aspect-4-3 shadow-md object-cover w-full h-44 sm:h-52 border border-[#E2E8F0] rounded-xl">
+          <img src="https://placehold.co/600x400" alt="Project placeholder" class="img-aspect-4-3 shadow-md object-cover w-full h-44 sm:h-52 border border-[#E2E8F0] rounded-xl">
+          <img src="https://placehold.co/600x400" alt="Project placeholder" class="img-aspect-4-3 shadow-md object-cover w-full h-44 sm:h-52 border border-[#E2E8F0] rounded-xl">
+          <img src="https://placehold.co/600x400" alt="Project placeholder" class="img-aspect-4-3 shadow-md object-cover w-full h-44 sm:h-52 border border-[#E2E8F0] rounded-xl">
+          <img src="https://placehold.co/600x400" alt="Project placeholder" class="img-aspect-4-3 shadow-md object-cover w-full h-44 sm:h-52 border border-[#E2E8F0] rounded-xl">
+          <img src="https://placehold.co/600x400" alt="Project placeholder" class="img-aspect-4-3 shadow-md object-cover w-full h-44 sm:h-52 border border-[#E2E8F0] rounded-xl">
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="bg-ghost py-14 sm:py-20 border-t border-[#E2E8F0]">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6">
+        <h2 class="font-heading text-3xl sm:text-4xl font-bold  section-header mb-10 text-center">Часто задаваемые вопросы</h2>
+        <div class="space-y-4" id="faq-list">
+          <div class="faq p-4 rounded-xl">
+            <div class="faq-question flex justify-between items-center font-semibold text-charcoal" tabindex="0">
+              <span>Вы оставляете чистоту после работ?</span>
+              <svg class="w-5 h-5 faq-arrow transform transition-transform" fill="none" stroke="#0047AB" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="faq-answer mt-2 text-sm text-charcoal/70">Всегда! Мы сверлим и режем с применением пылеудаления и после работ убираем за собой.</div>
+          </div>
+          <div class="faq p-4 rounded-xl">
+            <div class="faq-question flex justify-between items-center font-semibold text-charcoal" tabindex="0">
+              <span>Как быстро сможете приехать?</span>
+              <svg class="w-5 h-5 faq-arrow transform transition-transform" fill="none" stroke="#0047AB" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="faq-answer mt-2 text-sm text-charcoal/70">В большинстве случаев — в день обращения. Позвоните, и мы согласуем удобное время.</div>
+          </div>
+          <div class="faq p-4 rounded-xl">
+            <div class="faq-question flex justify-between items-center font-semibold text-charcoal" tabindex="0">
+              <span>Работаете по договору?</span>
+              <svg class="w-5 h-5 faq-arrow transform transition-transform" fill="none" stroke="#0047AB" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="faq-answer mt-2 text-sm text-charcoal/70">Да! Мы работаем официально, обеспечиваем гарантии и предоставляем все необходимые документы.</div>
+          </div>
+          <div class="faq p-4 rounded-xl">
+            <div class="faq-question flex justify-between items-center font-semibold text-charcoal" tabindex="0">
+              <span>Можете работать ночью/на высоте?</span>
+              <svg class="w-5 h-5 faq-arrow transform transition-transform" fill="none" stroke="#0047AB" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+            </div>
+            <div class="faq-answer mt-2 text-sm text-charcoal/70">Да! Осуществляем работы в сложных условиях, в том числе ночью, на высоте, быстро и безопасно.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT/FOOTER -->
+    <footer class="bg-ghost pt-16 pb-8 border-t border-[#E2E8F0]" id="contacts">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row gap-8 md:gap-14">
+        <div class="flex-1 flex flex-col gap-6">
+          <h3 class="font-heading text-2xl mb-2 text-primary font-bold">Контакты</h3>
+          <ul class="text-base font-body space-y-1">
+            <li><span class="text-charcoal font-semibold">Адрес:</span> <span class="text-charcoal/80">[ВАШ АДРЕС]</span></li>
+            <li><span class="text-charcoal font-semibold">Телефон:</span> <a href="tel:[ВАШ ТЕЛЕФОН]" class="underline decoration-primary text-primary font-semibold">[ВАШ ТЕЛЕФОН]</a></li>
+            <li><span class="text-charcoal font-semibold">WhatsApp:</span> <a href="https://wa.me/[ВАШ ТЕЛЕФОН]" target="_blank" class="underline decoration-primary text-primary font-semibold">WhatsApp</a></li>
+            <li><span class="text-charcoal font-semibold">Telegram:</span> <a href="https://t.me/[ВАШ ТЕЛЕГРАММ]" target="_blank" class="underline decoration-primary text-primary font-semibold">Telegram</a></li>
+          </ul>
+          <p class="text-sm text-charcoal/70 font-medium">Работаем ежедневно с 08:00 до 22:00</p>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+          <!-- Map Placeholder -->
+          <div class="w-full h-56 bg-navy border border-[#E2E8F0] flex items-center justify-center rounded-xl">
+            <span class="font-heading text-xl text-charcoal/30 font-semibold">[Google Map места]</span>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 mt-8 border-t border-[#E2E8F0] pt-4 flex flex-col md:flex-row items-center justify-between gap-1 text-xs text-charcoal/70 font-body">
+        <span class="font-medium">© <span id="footer-year"></span> АЛМАЗ-МАСТЕР. Все права защищены.</span>
+        <span>Разработка — <span class="text-primary font-semibold">[Имя/Компания]</span></span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+/* Light Tech Minimalist Theme */
+html {
+  scroll-behavior: smooth;
+}
+
+body { 
+  font-family: 'Inter', system-ui, sans-serif; 
+  color: #334155; 
+  background-color: #F4F7F6; 
+  font-weight: 400;
+}
+.font-heading { 
+  font-family: 'Inter', system-ui, sans-serif; 
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(.4,0,.2,1); }
+.faq-open .faq-answer { max-height: 300px; }
+.faq-question { cursor: pointer; }
+/* Light minimalist buttons - rounded corners */
+.astra-btn, .astra-btn-outline { 
+  border-radius: 12px !important; 
+  transition: all 0.2s ease; 
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.astra-btn { 
+  background: #0047AB; 
+  color: #FFFFFF; 
+  border: 2px solid #0047AB; 
+}
+.astra-btn:hover { 
+  background: #003380 !important; 
+  border-color: #003380; 
+  color: #FFFFFF; 
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 71, 171, 0.25);
+}
+.astra-btn-outline { 
+  background: transparent; 
+  color: #0047AB; 
+  border: 2px solid #0047AB; 
+}
+.astra-btn-outline:hover { 
+  background: rgba(0, 71, 171, 0.08); 
+  color: #0047AB; 
+  border-color: #0047AB;
+}
+.astra-btn-ghost { 
+  background: transparent; 
+  color: #334155; 
+  border: 1px solid #E2E8F0; 
+  border-radius: 12px; 
+}
+.astra-btn-ghost:hover { 
+  background: rgba(51, 65, 85, 0.05); 
+}
+/* Forms - rounded corners */
+.astra-input { 
+  border-radius: 12px !important; 
+  border-color: #E2E8F0 !important; 
+  background: #FFFFFF;
+  color: #334155;
+  border-width: 1px;
+}
+.astra-input:focus { 
+  border-color: #0047AB !important; 
+  box-shadow: 0 0 0 3px rgba(0, 71, 171, 0.1); 
+  background: #FFFFFF;
+  outline: none;
+}
+/* Progress bar */
+.astra-progress-bg { background: #E2E8F0; border-radius: 12px; }
+.astra-progress-bar { 
+  background: #0047AB; 
+  border-radius: 12px; 
+  transition: width .3s cubic-bezier(.4,0,.2,1); 
+}
+/* FAQ colors */
+.faq { 
+  background: #FFFFFF; 
+  border-color: #E2E8F0; 
+  border-radius: 12px;
+  border-width: 1px;
+}
+.faq-question, .faq-question span { color: #334155; font-weight: 600; }
+.faq-arrow { stroke: #0047AB; }
+.faq-answer { color: #64748B; }
+/* Cards - rounded corners, soft shadows */
+.astra-card { 
+  border-radius: 12px; 
+  border: 1px solid #E2E8F0; 
+  background: #FFFFFF; 
+  transition: all .2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.astra-card:hover { 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+  border-color: #E2E8F0; 
+  background: #FFFFFF;
+  transform: translateY(-2px);
+}
+/* Icon bg */
+.astra-icon-bg { background: rgba(0, 71, 171, 0.08); border-radius: 12px; }
+.astra-tag { border-radius: 8px; }
+/* Section header */
+.section-header { color: #334155; font-weight: 700; }
+/* Sticky header shadow */
+.astra-shadow { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }
+/* Hero overlay - light and airy */
+.astra-hero-overlay {
+  background: linear-gradient(rgba(244, 247, 246, 0.4), rgba(244, 247, 246, 0.6));
+  position:absolute; 
+  inset:0;
+  z-index:1;
+}
+/* Misc utilities */
+.transition-base { transition: all .2s cubic-bezier(.4,0,.2,1); }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid #0047AB;
+  outline-offset: 2px;
+}
+
+/* Bigger primary button specifically for quick request forms */
+.quick-request-btn {
+  font-size: 1rem !important;           /* ~16px */
+  font-weight: 700 !important;
+  letter-spacing: 0 !important;
+  padding: 0.875rem 1.25rem !important; /* 14px 20px */
+  min-height: 48px !important;
+  border-radius: 12px !important;
+}
+
+/* Calculator navigation container - remove shadow and make seamless */
+#calc-form > div[class*="absolute"][class*="left-0"][class*="right-0"][class*="bottom-0"] {
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Smooth scroll behavior for all browsers */
+@supports (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Scroll padding for anchor links to account for sticky header */
+:target {
+  scroll-margin-top: 80px;
+}
+
+/* Desktop dropdown "Услуги" */
+.nav-services:hover .nav-services-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-services.open .nav-services-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Header/layout stability */
+.site-header {
+  min-height: 72px;
+}
+.site-header-nav {
+  min-height: 56px;
+}
+
+/* Image aspect-ratio placeholders */
+.img-aspect-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+/* Mobile and Tablet Responsive Styles */
+@media (max-width: 640px) {
+  /* Calculator mobile fixes - no scroll, full display */
+  #calculator-container {
+    min-height: auto !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  #calc-form {
+    min-height: auto !important;
+    padding-bottom: 5.5rem;
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  /* Make all steps relative on mobile for proper height calculation */
+  .calc-step {
+    position: relative !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    overflow: visible !important;
+    inset: auto !important;
+  }
+  
+  .calc-step.step-2,
+  .calc-step.step-3 {
+    position: relative !important;
+    overflow: visible !important;
+    padding-bottom: 0;
+    inset: auto !important;
+  }
+  
+  /* Hide inactive steps on mobile */
+  .calc-step.invisible {
+    display: none !important;
+  }
+  
+  /* Navigation buttons container - relative on mobile */
+  #calc-form > div.absolute.left-0.right-0.bottom-0 {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin-top: 1rem;
+    box-shadow: none !important;
+    background: transparent !important;
+    width: 100%;
+  }
+  
+  /* Remove padding-bottom from form on mobile since nav is relative */
+  #calc-form {
+    padding-bottom: 0 !important;
+  }
+  
+  /* Hero section mobile */
+  .astra-hero-overlay {
+    background: linear-gradient(rgba(244, 247, 246, 0.5), rgba(244, 247, 246, 0.7));
+  }
+  
+  /* Calculator navigation buttons mobile */
+  #calc-back-btn,
+  #calc-next-btn {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.875rem !important;
+    white-space: nowrap;
+    flex: 1;
+    max-width: 48%;
+  }
+  
+  /* Form inputs mobile */
+  .astra-input {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Table mobile */
+  table {
+    font-size: 0.75rem;
+  }
+  
+  /* Cards mobile spacing */
+  .astra-card {
+    padding: 1rem;
+  }
+  
+  /* Hero image mobile */
+  section[class*="min-h-"] {
+    background-attachment: scroll;
+  }
+}
+
+/* Tablet styles (640px - 1024px) */
+@media (min-width: 640px) and (max-width: 1024px) {
+  #calculator-container {
+    min-height: 550px;
+  }
+  
+  .calc-step {
+    gap: 1.25rem;
+  }
+}
+
+/* Large mobile and small tablet (480px - 640px) */
+@media (min-width: 480px) and (max-width: 640px) {
+  #calculator-container {
+    padding: 1.5rem;
+  }
+  
+  .calc-step {
+    gap: 1rem;
+  }
+}
+
+/* Very small mobile (320px - 480px) */
+@media (max-width: 480px) {
+  /* Hero section */
+  section.relative.min-h-\[400px\] {
+    min-height: 350px !important;
+  }
+  
+  /* Calculator */
+  #calculator-container {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+  
+  /* Calculator title */
+  #calculator-container h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Progress bar mobile */
+  .astra-progress-bg {
+    height: 0.375rem;
+  }
+  
+  /* Service options mobile */
+  .calc-service-option {
+    padding: 0.75rem;
+  }
+  
+  .calc-service-option svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  /* Form labels mobile */
+  label {
+    font-size: 0.75rem;
+  }
+  
+  /* Navigation buttons mobile */
+  #calc-back-btn,
+  #calc-next-btn {
+    padding: 0.625rem 1.25rem !important;
+    font-size: 0.875rem !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button, a, input, select {
+    min-height: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .astra-card:hover {
+    transform: none;
+  }
+  
+  .astra-btn:hover {
+    transform: none;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  #calculator-container {
+    min-height: auto;
+    max-height: calc(100vh - 120px);
+  }
+  
+  section.relative.min-h-\[400px\] {
+    min-height: 280px !important;
+  }
+  
+  .calc-step {
+    gap: 0.75rem;
+  }
+}
+
+/* iPhone SE and small devices (320px - 375px) */
+@media (max-width: 375px) {
+  #calculator-container {
+    padding: 0.75rem;
+  }
+  
+  #calculator-container h2 {
+    font-size: 1.125rem;
+  }
+  
+  .calc-service-option {
+    padding: 0.625rem;
+  }
+  
+  .calc-service-option svg {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  
+  #calc-back-btn,
+  #calc-next-btn {
+    font-size: 0.7rem !important;
+    padding: 0.5rem 0.75rem !important;
+  }
+}
+
+/* iPad and tablets portrait (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  #calculator-container {
+    min-height: 580px;
+  }
+  
+  .calc-step {
+    gap: 1.5rem;
+  }
+}
